@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">mStand</string>
+    <string name="main_activity_name">Подставка монитора</string>
+    <string name="result_activity_name">Результат расчетов</string>
+    <string name="graphic_activity_name">Наглядная подсказка</string>
+
+    <string name="units">см</string>
+
+    <string name="intro">\t Для расчета, пожалуйства, введите следующие параметры в сантиметрах.</string>
+
+
+    <string name="chair">1. Высота сиденья стула относительно пола (h1).</string>
+    <string name="ex1">Например: 50</string>
+    <string name="eyes">2. Высота глаз пользователя относительно сиденья стула (h2).</string>
+    <string name="ex2">Например: 90</string>
+    <string name="table">3. Высота рабочей поверхности стола относительно пола (h3).</string>
+    <string name="ex3">Например: 73</string>
+    <string name="monitor_center">4. Расстояние от центра монитора относительно заводских ножек (h4).</string>
+    <string name="ex4">Например: 23</string>
+
+
+    <string name="btn_calculate">Посчитать</string>
+    <string name="stand_result">\t Рекомендуемая высота (h5) для эргономической подставки  монитора сотавляет: </string>
+
+    <string name="recommendation">\t *Для исключения погрешности, рекомендуем провести обмеры несколько раз \n \t **В случае отрицательного числа подставка под монитор не нужна</string>
+
+    <string name="again">Провести замер еще раз</string>
+    <string name="btn_graphic_hint">\?</string>
+    <string name="ready_stand">готовая подставка</string>
+    <string name="error_activity_name">Ошибка ввода</string>
+    <string name="error">\tВозможные ошибки:
+        \n
+        \n\t а) пустое поле ввода
+        \n\t б) значение параметра выше 150см
+        \n\n \t Пожалуйста, попройте еще раз
+    </string>
+
+    <string name="facebook_app_id">2729485830502158</string>
+    <string name="fb_login_protocol_scheme">fb2729485830502158</string>
+
+
+</resources>
+
