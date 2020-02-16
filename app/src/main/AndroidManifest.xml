@@ -29,6 +29,14 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter
+                android:label="filter_title">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="calcapp"
+                    android:host="user"/>
+            </intent-filter>
         </activity>
 
         <meta-data

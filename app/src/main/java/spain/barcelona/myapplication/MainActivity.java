@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.facebook.FacebookSdk;
 import com.facebook.applinks.AppLinkData;
 
 
  public class MainActivity extends AppCompatActivity {
-
 
      // проверка если нет данных в поле
      // проверка если ввели данные с плавающей запятой
@@ -19,16 +19,18 @@ import com.facebook.applinks.AppLinkData;
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_main);
-
+         FacebookSdk.setApplicationId(getString(R.string.facebook_app_id));
+         FacebookSdk.sdkInitialize(this);
          AppLinkData.fetchDeferredAppLinkData(this,
                  new AppLinkData.CompletionHandler() {
                      @Override
                      public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
                          // Process app link data
+
+
                      }
                  }
          );
-
      }
 
      public void onClickGraphicHint(View view) {
