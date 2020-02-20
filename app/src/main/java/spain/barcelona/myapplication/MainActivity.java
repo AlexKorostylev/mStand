@@ -4,85 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-
-import com.facebook.FacebookSdk;
+import android.widget.Toast;
 import com.facebook.applinks.AppLinkData;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    // проверка если нет данных в поле
-    // проверка если ввели данные с плавающей запятой
-
-    //
-    //
-    //
-    //
-
-    private final String SCHEME = "calcapp://user=";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FacebookSdk.setApplicationId(getString(R.string.facebook_app_id));
-        FacebookSdk.sdkInitialize(this);
+
         AppLinkData.fetchDeferredAppLinkData(this,
                 new AppLinkData.CompletionHandler() {
                     @Override
                     public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
                         // случай когда не важен источник установки, но запуск прилы с рекламы
-                        if (appLinkData.getTargetUri() != null &&
-                                appLinkData.getTargetUri().toString().equals(SCHEME)) {
-                            //todo показать вебвью, перейти на экран с вебью
-
+                        if (appLinkData.getTargetUri() != null) {
+                            onDeepLink();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
                         }
-                        // случай когда  важен источник установки и запуск прилы с рекламы
-                        //calcapp://user=source_install001
-                        //calcapp://user=source_install002
-                        //calcapp://user=source_install003
-                        if (appLinkData.getTargetUri() != null &&
-                                appLinkData.getTargetUri().toString().contains(SCHEME)) {
-                            //todo определем источник рекламі
-                            String source = tryCatchFbSource(appLinkData.getTargetUri().toString());
-                            //source  =  source_install003
-                            //todo показать вебвью, перейти на экран с вебью в зависимотсти от источника трафика
-                            switch (source){
-                                case "source_install001":
-                                    //todo open url1(visibility) или итнент на вебвью
-                                    break;
-                                case "source_install002":
-                                    //todo open url2(visibility) или итнент на вебвью
-                                    break;
-                                case "source_install003":
-                                    //todo open url3(visibility) или итнент на вебвью
-                                    break;
-                            }
-                        }
-
-
                     }
                 }
         );
     }
 
-
-    String tryCatchFbSource(String facebookUri) {
-        //получили ссілку calcapp://user=source_install003
-        String source = null;
-        try {
-            //обрезали часть calcapp://user
-            String valueWithAp = facebookUri.replace(SCHEME, "");
-            source = valueWithAp.trim();
-        } catch (Exception e) {
-            // Just ignore
-        }
-        Log.d("clientId: ", source);
-        return source;
-    }
 
     public void onClickGraphicHint(View view) {
         Intent intent = new Intent(this, GraphicHintActivity.class);
@@ -127,5 +76,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ErrorActivity.class);
             startActivity(intent);
         }
+    }
+
+    public void onDeepLink(){
+        Intent intent = new Intent(this, DeepLinkActivity.class);
+        startActivity(intent);
     }
 }
