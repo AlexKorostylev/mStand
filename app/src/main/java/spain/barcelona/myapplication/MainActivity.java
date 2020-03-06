@@ -17,19 +17,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AppLinkData.fetchDeferredAppLinkData(this,
-                new AppLinkData.CompletionHandler() {
-                    @Override
-                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
-                        // случай когда не важен источник установки, но запуск прилы с рекламы
-                        if (appLinkData.getTargetUri() != null) {
-                            onDeepLink();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-        );
     }
 
 
@@ -66,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ResultActivity.class);
             intent.putExtra("INPUT_DATA", input);
             startActivity(intent);
+
 
             if (chair > 150 | eyes > 150 | table > 150 | monitor > 150) {
                 intent = new Intent(this, ErrorActivity.class);
