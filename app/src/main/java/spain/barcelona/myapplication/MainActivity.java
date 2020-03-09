@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.facebook.applinks.AppLinkData;
 
 
@@ -16,9 +17,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        AppLinkData.fetchDeferredAppLinkData(this,
+                new AppLinkData.CompletionHandler() {
+                    @Override
+                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
+                        // случай когда не важен источник установки, но запуск прилы с рекламы
+                        if (appLinkData != null && appLinkData.getTargetUri() != null) {
+//                            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
+                            DeepLinkActivity.start(MainActivity.this);
+                        }
+                    }
+                }
+        );
     }
-
 
     public void onClickGraphicHint(View view) {
         Intent intent = new Intent(this, GraphicHintActivity.class);
@@ -66,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onDeepLink(){
+    public void onDeepLink() {
         Intent intent = new Intent(this, DeepLinkActivity.class);
         startActivity(intent);
     }
