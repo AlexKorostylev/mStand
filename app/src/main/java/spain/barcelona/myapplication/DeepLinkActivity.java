@@ -11,8 +11,9 @@ import com.facebook.applinks.AppLinkData;
 
  public class DeepLinkActivity extends AppCompatActivity {
 
-     public static void start(Context context) {
+     public static void start(Context context, String offer) {
          Intent starter = new Intent(context, DeepLinkActivity.class);
+         starter.putExtra("offer", offer);
          context.startActivity(starter);
      }
 
@@ -20,7 +21,7 @@ import com.facebook.applinks.AppLinkData;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deep_link);
-        Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Empty deep link "+ getIntent().getStringExtra("offer"), Toast.LENGTH_LONG).show();
 //        AppLinkData.fetchDeferredAppLinkData(this,
 //                new AppLinkData.CompletionHandler() {
 //                    @Override

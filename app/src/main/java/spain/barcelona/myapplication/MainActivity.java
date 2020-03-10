@@ -3,11 +3,14 @@ package spain.barcelona.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
 import com.facebook.applinks.AppLinkData;
 
 
@@ -17,18 +20,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppLinkData.fetchDeferredAppLinkData(this,
-                new AppLinkData.CompletionHandler() {
-                    @Override
-                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
-                        // случай когда не важен источник установки, но запуск прилы с рекламы
-                        if (appLinkData != null && appLinkData.getTargetUri() != null) {
-//                            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
-                            DeepLinkActivity.start(MainActivity.this);
-                        }
-                    }
-                }
-        );
+//        FacebookSdk.setApplicationId(getString(R.string.facebook_app_id));
+//        FacebookSdk.sdkInitialize(this);
+        //case with deffered deep link
+//        FacebookSdk.setAutoInitEnabled(true);
+//        FacebookSdk.fullyInitialize();
+//        AppLinkData.fetchDeferredAppLinkData(this,
+//                new AppLinkData.CompletionHandler() {
+//                    @Override
+//                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
+//                        Log.d("TAG", "onDeferredAppLinkDataFetched: "+"event");
+//                        // случай когда не важен источник установки, но запуск прилы с рекламы
+//                        if (appLinkData != null && appLinkData.getTargetUri() != null) {
+////                            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
+//                            Log.d("TAG", "onDeferredAppLinkDataFetched: "+appLinkData.getTargetUri().toString());
+//                            DeepLinkActivity.start(MainActivity.this);
+//                        }
+//                    }
+//                }
+//        );
+
+        //case with deep link
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        if (data != null) {
+            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
+            Log.d("TAG", "onDeferredAppLinkDataFetched: " + data.toString());
+            //ecalcapp://user?offer=abcde
+            String[] arrBefore = data.toString().split("&");
+            String clearData = arrBefore[0].replace("ecalcapp://user?","");
+            String[] arr  = clearData.split("=");
+            DeepLinkActivity.start(MainActivity.this, arr[1]);
+        }
     }
 
     public void onClickGraphicHint(View view) {
