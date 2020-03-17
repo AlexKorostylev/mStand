@@ -20,28 +20,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        FacebookSdk.setApplicationId(getString(R.string.facebook_app_id));
-//        FacebookSdk.sdkInitialize(this);
+        FacebookSdk.setApplicationId(getString(R.string.facebook_app_id));
+        FacebookSdk.sdkInitialize(this);
         //case with deffered deep link
-//        FacebookSdk.setAutoInitEnabled(true);
-//        FacebookSdk.fullyInitialize();
-//        AppLinkData.fetchDeferredAppLinkData(this,
-//                new AppLinkData.CompletionHandler() {
-//                    @Override
-//                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
-//                        Log.d("TAG", "onDeferredAppLinkDataFetched: "+"event");
-//                        // случай когда не важен источник установки, но запуск прилы с рекламы
-//                        if (appLinkData != null && appLinkData.getTargetUri() != null) {
-////                            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
-//                            Log.d("TAG", "onDeferredAppLinkDataFetched: "+appLinkData.getTargetUri().toString());
-//                            DeepLinkActivity.start(MainActivity.this);
-//                        }
-//                    }
-//                }
-//        );
+        FacebookSdk.setAutoInitEnabled(true);
+        FacebookSdk.fullyInitialize();
+        AppLinkData.fetchDeferredAppLinkData(this,
+                new AppLinkData.CompletionHandler() {
+                    @Override
+                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
+                        //Log.d("TAG", "onDeferredAppLinkDataFetched: "+"event");
+                        // случай когда не важен источник установки, но запуск прилы с рекламы
+                        if (appLinkData != null && appLinkData.getTargetUri() != null) {
+                            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
+                            //Log.d("TAG", "onDeferredAppLinkDataFetched: "+appLinkData.getTargetUri().toString());
+                            onDeepLink();
+                        }
+                    }
+                }
+        );
 
         //case with deep link
-        Intent intent = getIntent();
+/*          Intent intent = getIntent();
         Uri data = intent.getData();
         if (data != null) {
             Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             String clearData = arrBefore[0].replace("ecalcapp://user?","");
             String[] arr  = clearData.split("=");
             DeepLinkActivity.start(MainActivity.this, arr[1]);
-        }
+        }*/
     }
 
     public void onClickGraphicHint(View view) {
