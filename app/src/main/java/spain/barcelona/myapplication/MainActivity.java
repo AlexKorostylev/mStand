@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.facebook.FacebookSdk;
 import com.facebook.applinks.AppLinkData;
 
+import bolts.AppLinks;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,10 +22,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FacebookSdk.setApplicationId(getString(R.string.facebook_app_id));
-        FacebookSdk.sdkInitialize(this);
+        //FacebookSdk.setApplicationId(getString(R.string.facebook_app_id));
+        //FacebookSdk.sdkInitialize(this);
+
         //case with deffered deep link
-        FacebookSdk.setAutoInitEnabled(true);
+        // Version 1
+        //FacebookSdk.setAutoInitEnabled(true);
+        //FacebookSdk.fullyInitialize();
+        AppLinkData.fetchDeferredAppLinkData(this,
+                new AppLinkData.CompletionHandler() {
+                    @Override
+                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
+                        if(appLinkData != null){
+                            onDeepLink();
+                        }
+                    }
+                }
+        );
+
+
+
+                // Current Version
+/*      FacebookSdk.setAutoInitEnabled(true);
         FacebookSdk.fullyInitialize();
         AppLinkData.fetchDeferredAppLinkData(this,
                 new AppLinkData.CompletionHandler() {
@@ -38,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-        );
+        );*/
 
         //case with deep link
 /*          Intent intent = getIntent();
@@ -104,4 +124,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DeepLinkActivity.class);
         startActivity(intent);
     }
+
+
+
 }
