@@ -26,10 +26,48 @@ public class MainActivity extends AppCompatActivity {
         //FacebookSdk.sdkInitialize(this);
 
         //case with deffered deep link
+        // Version 2
+        FacebookSdk.setAutoInitEnabled(true);
+        FacebookSdk.fullyInitialize();
+        AppLinkData.fetchDeferredAppLinkData(this,
+                new AppLinkData.CompletionHandler() {
+                    @Override
+                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
+                        if (appLinkData == null){
+                            try {
+                                Uri data = appLinkData.getTargetUri();
+                                String stringUri;
+                                stringUri = data.toString();
+                                Toast.makeText(getApplicationContext(), stringUri, Toast.LENGTH_SHORT).show();
+                                String promo = appLinkData.getPromotionCode();
+                                Toast.makeText(getApplicationContext(), promo, Toast.LENGTH_SHORT).show();
+                                onDeepLink();
+                            } catch (NullPointerException e) {
+                                Log.e("Deep", "Incorrect deeplink!");
+                            }
+                        } else {
+                            try {
+                                Uri data = appLinkData.getTargetUri();
+                                String stringUri;
+                                stringUri = data.toString();
+                                Toast.makeText(getApplicationContext(), stringUri, Toast.LENGTH_SHORT).show();
+                                String promo = appLinkData.getPromotionCode();
+                                Toast.makeText(getApplicationContext(), promo, Toast.LENGTH_SHORT).show();
+                                onDeepLink();
+                            } catch (NullPointerException e) {
+                                Log.e("Deep", "Incorrect deep!");
+                            }
+
+                        }
+                    }
+                }
+        );
+
+
         // Version 1
         //FacebookSdk.setAutoInitEnabled(true);
         //FacebookSdk.fullyInitialize();
-        AppLinkData.fetchDeferredAppLinkData(this,
+        /*AppLinkData.fetchDeferredAppLinkData(this,
                 new AppLinkData.CompletionHandler() {
                     @Override
                     public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
@@ -38,9 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-        );
-
-
+        );*/
 
                 // Current Version
 /*      FacebookSdk.setAutoInitEnabled(true);
@@ -124,7 +160,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DeepLinkActivity.class);
         startActivity(intent);
     }
-
-
 
 }
