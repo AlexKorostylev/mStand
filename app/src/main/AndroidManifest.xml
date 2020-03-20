@@ -52,7 +52,7 @@
 <!--                    android:host="www.domaindomain.site"-->
 <!--                    android:scheme="http" />-->
 <!--            </intent-filter>-->
-            <intent-filter android:label="mstandlink2">
+            <intent-filter android:label="mstandlink3">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />

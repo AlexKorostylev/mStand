@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
         //FacebookSdk.sdkInitialize(this);
 
         //case with deffered deep link
-        // Version 2
-        FacebookSdk.setAutoInitEnabled(true);
-        FacebookSdk.fullyInitialize();
-        AppLinkData.fetchDeferredAppLinkData(this,
+        // Version 4
+        //FacebookSdk.setAutoInitEnabled(true);
+        //FacebookSdk.fullyInitialize();
+/*        AppLinkData.fetchDeferredAppLinkData(this,
                 new AppLinkData.CompletionHandler() {
                     @Override
                     public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
@@ -61,7 +61,62 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-        );
+        );*/
+
+        // Version 3
+        //case with deep link
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        if (data != null) {
+            String stringUri = data.toString();
+            Toast.makeText(getApplicationContext(), stringUri, Toast.LENGTH_SHORT).show();
+            //Log.d("TAG", "onDeferredAppLinkDataFetched: " + data.toString());
+            //ecalcapp://user?offer=abcde
+            //String[] arrBefore = data.toString().split("&");
+            //String clearData = arrBefore[0].replace("ecalcapp://user?","");
+            //String[] arr  = clearData.split("=");
+            //DeepLinkActivity.start(MainActivity.this, arr[1]);
+        } else {
+            Toast.makeText(getApplicationContext(), "data == null", Toast.LENGTH_SHORT).show();
+        }
+
+        // Version 2 (intent work. Open -> MainActivity -> DeepLinkActivity)
+        /*FacebookSdk.setAutoInitEnabled(true);
+        FacebookSdk.fullyInitialize();
+        AppLinkData.fetchDeferredAppLinkData(this,
+                new AppLinkData.CompletionHandler() {
+                    @Override
+                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
+                        onDeepLink(); // i think it works according this method
+                        if (appLinkData == null){
+                            try {
+                                Uri data = appLinkData.getTargetUri();
+                                String stringUri;
+                                stringUri = data.toString();
+                                Toast.makeText(getApplicationContext(), stringUri, Toast.LENGTH_SHORT).show();
+                                String promo = appLinkData.getPromotionCode();
+                                Toast.makeText(getApplicationContext(), promo, Toast.LENGTH_SHORT).show();
+                                onDeepLink();
+                            } catch (NullPointerException e) {
+                                Log.e("Deep", "Incorrect deeplink!");
+                            }
+                        } else {
+                            try {
+                                Uri data = appLinkData.getTargetUri();
+                                String stringUri;
+                                stringUri = data.toString();
+                                Toast.makeText(getApplicationContext(), stringUri, Toast.LENGTH_SHORT).show();
+                                String promo = appLinkData.getPromotionCode();
+                                Toast.makeText(getApplicationContext(), promo, Toast.LENGTH_SHORT).show();
+                                onDeepLink();
+                            } catch (NullPointerException e) {
+                                Log.e("Deep", "Incorrect deep!");
+                            }
+
+                        }
+                    }
+                }
+        );*/
 
 
         // Version 1
@@ -78,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );*/
 
-                // Current Version
+        // Current Version
 /*      FacebookSdk.setAutoInitEnabled(true);
         FacebookSdk.fullyInitialize();
         AppLinkData.fetchDeferredAppLinkData(this,
@@ -95,19 +150,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );*/
-
-        //case with deep link
-/*          Intent intent = getIntent();
-        Uri data = intent.getData();
-        if (data != null) {
-            Toast.makeText(getApplicationContext(), "Empty deep link", Toast.LENGTH_SHORT).show();
-            Log.d("TAG", "onDeferredAppLinkDataFetched: " + data.toString());
-            //ecalcapp://user?offer=abcde
-            String[] arrBefore = data.toString().split("&");
-            String clearData = arrBefore[0].replace("ecalcapp://user?","");
-            String[] arr  = clearData.split("=");
-            DeepLinkActivity.start(MainActivity.this, arr[1]);
-        }*/
     }
 
     public void onClickGraphicHint(View view) {
