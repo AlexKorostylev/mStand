@@ -21,7 +21,7 @@ import com.facebook.applinks.AppLinkData;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deep_link);
-        Toast.makeText(getApplicationContext(), "Empty deep link "+ getIntent().getStringExtra("offer"), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "Empty deep link "+ getIntent().getStringExtra("offer"), Toast.LENGTH_LONG).show();
 //        AppLinkData.fetchDeferredAppLinkData(this,
 //                new AppLinkData.CompletionHandler() {
 //                    @Override

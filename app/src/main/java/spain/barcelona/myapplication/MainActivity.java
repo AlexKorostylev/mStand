@@ -3,8 +3,12 @@ package spain.barcelona.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +16,9 @@ import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.applinks.AppLinkData;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import bolts.AppLinks;
 
@@ -26,26 +33,29 @@ public class MainActivity extends AppCompatActivity {
         //FacebookSdk.sdkInitialize(this);
 
         //case with deffered deep link
-        // Version 4
+        // Version 5
         //FacebookSdk.setAutoInitEnabled(true);
         //FacebookSdk.fullyInitialize();
-/*        AppLinkData.fetchDeferredAppLinkData(this,
+        /*AppLinkData.fetchDeferredAppLinkData(this,
                 new AppLinkData.CompletionHandler() {
                     @Override
                     public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
-                        if (appLinkData == null){
-                            try {
-                                Uri data = appLinkData.getTargetUri();
-                                String stringUri;
-                                stringUri = data.toString();
-                                Toast.makeText(getApplicationContext(), stringUri, Toast.LENGTH_SHORT).show();
-                                String promo = appLinkData.getPromotionCode();
-                                Toast.makeText(getApplicationContext(), promo, Toast.LENGTH_SHORT).show();
-                                onDeepLink();
+
+
+                       *//*     try {
+                                //Uri data = appLinkData.getTargetUri();
+                                //Log.e("SplashActivity", "data: " + data);
+                                //String stringUri;
+                                //stringUri = data.toString();
+                                //Toast.makeText(getApplicationContext(), stringUri, Toast.LENGTH_SHORT).show();
+                                //String promo = appLinkData.getPromotionCode();
+                                //Toast.makeText(getApplicationContext(), promo, Toast.LENGTH_SHORT).show();
+                                onEmptyActivity();
                             } catch (NullPointerException e) {
                                 Log.e("Deep", "Incorrect deeplink!");
-                            }
-                        } else {
+                            }*//*
+
+                       if(appLinkData != null) {
                             try {
                                 Uri data = appLinkData.getTargetUri();
                                 String stringUri;
@@ -54,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                                 String promo = appLinkData.getPromotionCode();
                                 Toast.makeText(getApplicationContext(), promo, Toast.LENGTH_SHORT).show();
                                 onDeepLink();
+                                Log.e("Splash", "data: " + data);
                             } catch (NullPointerException e) {
                                 Log.e("Deep", "Incorrect deep!");
                             }
@@ -63,9 +74,60 @@ public class MainActivity extends AppCompatActivity {
                 }
         );*/
 
+
+        // Version 4
+        Intent intent = getIntent();
+        Uri dataM = intent.getData();
+        if(dataM != null){
+            String stringUri;
+            // ecalcapp://user?ofer=1&target_url=ecalcapp%3A%2F%2Fuser%3Fofer%3D1
+            stringUri = dataM.toString();
+            //stringUri = "ecalcapp://user?ofer=1&target_url=ecalcapp%3A%2F%2Fuser%3Fofer%3D1";
+            String clearHost = stringUri.replace("ecalcapp://user", "");
+
+            String sub = "target_url";
+            int lastCharacter = clearHost.indexOf(sub);
+            String num = Integer.toString(lastCharacter);
+            //Toast.makeText(getApplicationContext(), num, Toast.LENGTH_SHORT).show();
+            String deepL;
+            if(lastCharacter ==1){
+                //String stringUri = "ecalcapp://user?target_url=ecalcapp%3A%2F%2Fuser";
+                deepL = clearHost.substring(1,lastCharacter);
+            } else {
+                //String stringUri = "ecalcapp://user?ofer=1&target_url=ecalcapp%3A%2F%2Fuser%3Fofer%3D1";
+                deepL = clearHost.substring(1,lastCharacter-1);
+            }
+            Toast.makeText(getApplicationContext(), deepL, Toast.LENGTH_SHORT).show();
+            onDeepLink();
+            finishAffinity();
+        }
+
+        // 2020-03-20 20:16:09.577 6612-6612/spain.barcelona.myapplication
+        // E/SplashActivity: data: ecalcapp://user?target_url=ecalcapp%3A%2F%2Fuser
+
+        //2020-03-20 20:41:16.133 17007-17007/?
+        // E/SplashActivity: data: ecalcapp://user?ofer=1&target_url=ecalcapp%3A%2F%2Fuser%3Fofer%3D1
+
+
+        // Add code to print out the key hash
+/*        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "spain.barcelona.myapplication",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }*/
+
         // Version 3
         //case with deep link
-        Intent intent = getIntent();
+/*        Intent intent = getIntent();
         Uri data = intent.getData();
         if (data != null) {
             String stringUri = data.toString();
@@ -78,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             //DeepLinkActivity.start(MainActivity.this, arr[1]);
         } else {
             Toast.makeText(getApplicationContext(), "data == null", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         // Version 2 (intent work. Open -> MainActivity -> DeepLinkActivity)
         /*FacebookSdk.setAutoInitEnabled(true);
@@ -200,6 +262,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onDeepLink() {
         Intent intent = new Intent(this, DeepLinkActivity.class);
+        startActivity(intent);
+    }
+
+    public void onEmptyActivity() {
+        Intent intent = new Intent(this, EmptyActivity.class);
         startActivity(intent);
     }
 

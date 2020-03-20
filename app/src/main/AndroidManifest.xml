@@ -11,9 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
-            android:value="false"/>
-        <activity android:name=".DeepLinkActivity"/>
+        <activity android:name=".EmptyActivity"></activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+            android:value="false" />
+
+        <activity android:name=".DeepLinkActivity" />
         <activity
             android:name=".ErrorActivity"
             android:label="@string/error_activity_name" />
@@ -32,30 +36,36 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
 
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
 
-<!--                <data-->
-<!--                    android:host="www.domaindomain.site"-->
-<!--                    android:scheme="https" />-->
-<!--            </intent-filter>-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+            <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
 
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
 
-<!--                <data-->
-<!--                    android:host="www.domaindomain.site"-->
-<!--                    android:scheme="http" />-->
-<!--            </intent-filter>-->
-            <intent-filter android:label="mstandlink3">
+            <!-- <data -->
+            <!-- android:host="www.domaindomain.site" -->
+            <!-- android:scheme="https" /> -->
+            <!-- </intent-filter> -->
+            <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+
+
+            <category android:name="android.intent.category.BROWSABLE" />
+            <category android:name="android.intent.category.DEFAULT" />
+
+
+            <data
+            android:host="www.domaindomain.site"
+            android:scheme="http" />
+            </intent-filter>
+            <intent-filter android:label="mstandlink4">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="user"
                     android:scheme="ecalcapp" />
